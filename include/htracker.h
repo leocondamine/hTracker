@@ -18,6 +18,8 @@ public:
     int habitNumberTotal;
     int dayNumberTotal;
     int getDayNumberTotal();
+    class topHabit *topHabitptr;
+
 
 private slots:
     void on_addHabitBtn_clicked();

@@ -17,7 +17,7 @@ hTracker::hTracker(QWidget *parent)
 {
     ui->setupUi(this);
     //dayNumberTotal = getDayNumberTotal();
-    topHabit *topHabitptr = new topHabit(this);
+    topHabitptr = new topHabit(this);
     ui->habitLayout->addWidget(topHabitptr);
 
 }
@@ -35,7 +35,7 @@ void hTracker::addNewHabit()
     {
         ui->habitLayout->addWidget(newHabitptr);
         newHabitptr->setAttribute(Qt::WA_DeleteOnClose, true);
-        connect(ui->habitLayout-><QScrollArea::horizontalScrollBar *>(), SIGNAL(valueChanged(int)), newHabitptr->findChild<QScrollArea::horizontalScrollBar *>(), SLOT(setValue(int)));
+        // connect(ui->habitLayout-><QScrollBar *>(), SIGNAL(valueChanged(int)), newHabitptr->findChild<QScrollArea::horizontalScrollBar *>(), SLOT(setValue(int)));
         ++habitNumberTotal;
     }
 }
