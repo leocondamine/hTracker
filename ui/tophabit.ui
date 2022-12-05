@@ -98,7 +98,7 @@
           <number>0</number>
          </property>
          <item>
-          <layout class="QHBoxLayout" name="trackingLayout"/>
+          <layout class="QHBoxLayout" name="trackingDateLayout"/>
          </item>
         </layout>
        </widget>

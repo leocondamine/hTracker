@@ -17,6 +17,7 @@ public:
     ~hTracker();
     int habitNumberTotal;
     int dayNumberTotal;
+    int getDayNumberTotal();
 
 private slots:
     void on_addHabitBtn_clicked();
@@ -24,5 +25,6 @@ private slots:
 private:
     Ui::hTracker *ui;
     void addNewHabit();
+
 };
 #endif // HTRACKER_H

@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QScrollBar>
 #include <QWheelEvent>
+#include "htracker.h"
 
 namespace Ui {
 class newHabit;
@@ -19,6 +20,9 @@ public:
     ~newHabit();
     void nameHabitLabel();
     QString habitName;
+    int dayNumberTotal;
+
+    Ui::newHabit *ui;
 
 
 private slots:
@@ -26,7 +30,8 @@ private slots:
    // void scrollMouseEvent(QWheelEvent *event);
 
 private:
-    Ui::newHabit *ui;
+    int getDayNumberTotal();
+
 
 };
 

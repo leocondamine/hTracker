@@ -14,6 +14,7 @@ VPATH += src/
 
 SOURCES += \
     checkhabitbtn.cpp \
+    datelabel.cpp \
     main.cpp \
     htracker.cpp \
     newhabit.cpp \
@@ -21,12 +22,14 @@ SOURCES += \
 
 HEADERS += \
     include/checkhabitbtn.h \
+    include/datelabel.h \
     include/htracker.h \
     include/newhabit.h \
     include/tophabit.h
 
 FORMS += \
     ui/checkhabitbtn.ui \
+    ui/datelabel.ui \
     ui/tophabit.ui \
     ui/htracker.ui \
     ui/newhabit.ui

@@ -1,4 +1,5 @@
 #include "newhabit.h"
+#include "htracker.h"
 #include "ui_newhabit.h"
 #include "checkhabitbtn.h"
 #include <QInputDialog>
@@ -10,13 +11,12 @@ newHabit::newHabit(QWidget *parent) :
     ui(new Ui::newHabit)
 {
     ui->setupUi(this);
-    for (int i = 0; i < 10; ++i)
-    {
-        checkHabitBtn *checkHabitBtnptr = new checkHabitBtn(this);
-        ui->trackingLayout->addWidget(checkHabitBtnptr);
-    }
-    checkHabitBtn *checkHabitBtnptr = new checkHabitBtn(this);
-    ui->trackingLayout->addWidget(checkHabitBtnptr);
+    int dayNumberTotal = getDayNumberTotal();
+    for (int i = 0; i < dayNumberTotal; ++i)
+        {
+            checkHabitBtn *checkHabitBtnptr = new checkHabitBtn(this);
+            ui->trackingLayout->addWidget(checkHabitBtnptr);
+        }
     ui->scrollArea->horizontalScrollBar()->setStyleSheet("QScrollBar {height:3px;}");
     ui->scrollArea->horizontalScrollBar()->setValue(50);
 }
@@ -38,5 +38,9 @@ void newHabit::on_habitLabel_clicked()
     ui->habitLabel->setText(habitName);
 }
 
+int newHabit::getDayNumberTotal()
+{
+    return 47;
+}
 
 
