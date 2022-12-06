@@ -15,13 +15,30 @@ checkHabitBtn::~checkHabitBtn()
 
 void checkHabitBtn::on_pushButton_clicked()
 {
-    if (ui->pushButton->text() == "0")
+    if (State == 0)
     {
-        ui->pushButton->setText("1");
+        // TODO SetStyle sheet done
+        State = 1;
     }
-    else
+    else if (State == 1)
     {
-        ui->pushButton->setText("0");
+        // TODO SetStyle sheet not done
+        State = 0;
     }
 }
 
+void checkHabitBtn::assignDateToLabel(QString day)
+{
+   ui->pushButton->setText(day);
+}
+
+
+void checkHabitBtn::setStyleSheetDone()
+{
+
+}
+
+void checkHabitBtn::setStyleSheetNotDone()
+{
+
+}

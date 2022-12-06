@@ -5,7 +5,10 @@
 #include <QVector>
 #include <QScrollBar>
 #include <QWheelEvent>
-#include "htracker.h"
+#include <QVector>
+#include <checkhabitbtn.h>
+#include <QDate>
+
 
 namespace Ui {
 class newHabit;
@@ -19,18 +22,24 @@ public:
     explicit newHabit(QWidget *parent = nullptr);
     ~newHabit();
     void nameHabitLabel();
-    QString habitName;
-    int dayNumberTotal;
 
-    Ui::newHabit *ui;
+    QString habitName;
+
+    int dayNumberTotal;
+    QVector<checkHabitBtn *> allDaysState;
+
+    QDate dayOfStart;
+    QString dayOfStartstr;
+
 
 
 private slots:
     void on_habitLabel_clicked();
-   // void scrollMouseEvent(QWheelEvent *event);
 
 private:
     int getDayNumberTotal();
+    void loadDayData();
+    Ui::newHabit *ui;
 
 
 };

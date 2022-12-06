@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 #include <QString>
+#include <QVector>
+#include <QJsonObject>
+
+#include "newhabit.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class hTracker; }
@@ -15,11 +19,9 @@ class hTracker : public QMainWindow
 public:
     hTracker(QWidget *parent = nullptr);
     ~hTracker();
-    int habitNumberTotal;
-    int dayNumberTotal;
-    int getDayNumberTotal();
-    class topHabit *topHabitptr;
 
+    int habitNumberTotal;
+    QVector<newHabit *> allHabits;
 
 private slots:
     void on_addHabitBtn_clicked();
@@ -27,6 +29,12 @@ private slots:
 private:
     Ui::hTracker *ui;
     void addNewHabit();
+
+    void openReadHabitData();
+    bool loadHabitData(const QJsonObject &json);
+
+    bool writeAllData(QJsonObject &json);
+    void saveData();
 
 };
 #endif // HTRACKER_H

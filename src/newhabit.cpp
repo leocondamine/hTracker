@@ -1,24 +1,38 @@
 #include "newhabit.h"
-#include "htracker.h"
-#include "ui_newhabit.h"
 #include "checkhabitbtn.h"
+#include "ui_newhabit.h"
 #include <QInputDialog>
 #include <QScrollArea>
 #include <QWheelEvent>
+#include <QDate>
+#include <QDialog>
 
 newHabit::newHabit(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::newHabit)
 {
     ui->setupUi(this);
-    int dayNumberTotal = getDayNumberTotal();
-    for (int i = 0; i < dayNumberTotal; ++i)
-        {
-            checkHabitBtn *checkHabitBtnptr = new checkHabitBtn(this);
-            ui->trackingLayout->addWidget(checkHabitBtnptr);
-        }
     ui->scrollArea->horizontalScrollBar()->setStyleSheet("QScrollBar {height:3px;}");
-    ui->scrollArea->horizontalScrollBar()->setValue(50);
+
+    QDate dateOfToday = QDate::currentDate();
+    QDate dateValue = dateOfToday;
+
+    int dayNumberTotal = 30;
+    for (int i = 0; i < dayNumberTotal; ++i)
+    {
+        int dayValueInt = dateValue.day();
+        QString dayValue = QString::number(dayValueInt);
+
+        checkHabitBtn *checkHabitBtnptr = new checkHabitBtn(this);
+        checkHabitBtnptr->assignDateToLabel(dayValue);
+        ui->trackingLayout->addWidget(checkHabitBtnptr);
+
+        allDaysState.append(checkHabitBtnptr);
+
+        dateValue = dateOfToday.addDays(i+1);
+
+    }
+
 }
 
 newHabit::~newHabit()
@@ -28,19 +42,31 @@ newHabit::~newHabit()
 
 void newHabit::nameHabitLabel()
 {
-    habitName = QInputDialog::getText(this, " ", "Quelle est votre nouvelle habitude ?");
+    if (habitName == "")
+    {
+        habitName = QInputDialog::getText(this, " ", "Quelle est votre nouvelle habitude ?");
+    }
     ui->habitLabel->setText(habitName);
 }
 
 void newHabit::on_habitLabel_clicked()
 {
     habitName = QInputDialog::getText(this, " ", "Comment voulez vous  renommer votre habitube ?");
-    ui->habitLabel->setText(habitName);
+    if (habitName != "")
+    {
+        ui->habitLabel->setText(habitName);
+    }
+    else
+    {
+        // TODO error empty habit
+    }
+
 }
 
-int newHabit::getDayNumberTotal()
+void newHabit::loadDayData()
 {
-    return 47;
+
 }
+
 
 

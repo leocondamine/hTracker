@@ -14,6 +14,11 @@ class checkHabitBtn : public QWidget
 public:
     explicit checkHabitBtn(QWidget *parent = nullptr);
     ~checkHabitBtn();
+    void assignDateToLabel(QString day);
+
+    int State{0};
+    void setStyleSheetDone();
+    void setStyleSheetNotDone();
 
 private slots:
     void on_pushButton_clicked();
