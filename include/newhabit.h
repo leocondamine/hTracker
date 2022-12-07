@@ -24,22 +24,35 @@ public:
     void nameHabitLabel();
 
     QString habitName;
+    int habitIndex;
 
-    int dayNumberTotal;
+    int dayNumberTotal{1};
     QVector<checkHabitBtn *> allDaysState;
 
     QDate dayOfStart;
     QString dayOfStartstr;
+    bool loadedHabit;
+    void setupCheckHabitBtn(QJsonArray &habitStateArray);
 
+    void closeHabit(int index);
 
+public slots:
+    void displayNewNumberHabit(int N);
 
 private slots:
     void on_habitLabel_clicked();
 
+    void on_closeButton_clicked();
+
 private:
+    int numberHabitDone{0};
     int getDayNumberTotal();
-    void loadDayData();
+    void openReadDayData();
+    bool loadDayData(const QJsonObject &json);
     Ui::newHabit *ui;
+
+signals:
+    void closeThisHabit(int index);
 
 
 };

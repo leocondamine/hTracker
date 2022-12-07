@@ -19,6 +19,11 @@ public:
     int State{0};
     void setStyleSheetDone();
     void setStyleSheetNotDone();
+    void setDone();
+    void setNotDone();
+
+signals:
+    void habitNumberChanged(int N);
 
 private slots:
     void on_pushButton_clicked();
@@ -26,5 +31,6 @@ private slots:
 private:
     Ui::checkHabitBtn *ui;
 };
+
 
 #endif // CHECKHABITBTN_H

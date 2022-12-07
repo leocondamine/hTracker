@@ -17,13 +17,13 @@ void checkHabitBtn::on_pushButton_clicked()
 {
     if (State == 0)
     {
-        // TODO SetStyle sheet done
-        State = 1;
+        setDone();
+        emit habitNumberChanged(1);
     }
     else if (State == 1)
     {
-        // TODO SetStyle sheet not done
-        State = 0;
+        setNotDone();
+        emit habitNumberChanged(-1);
     }
 }
 
@@ -32,13 +32,25 @@ void checkHabitBtn::assignDateToLabel(QString day)
    ui->pushButton->setText(day);
 }
 
+void checkHabitBtn::setDone()
+{
+    setStyleSheetDone();
+    State = 1;
+}
+
+void checkHabitBtn::setNotDone()
+{
+    setStyleSheetNotDone();
+    State = 0;
+}
+
 
 void checkHabitBtn::setStyleSheetDone()
 {
-
+    ui->pushButton->setStyleSheet("QPushButton {color: red; border: 3px}");
 }
 
 void checkHabitBtn::setStyleSheetNotDone()
 {
-
+    ui->pushButton->setStyleSheet("QPushButton {color: blue; border: 3px}");
 }

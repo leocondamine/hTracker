@@ -5,8 +5,8 @@
 #include <QString>
 #include <QVector>
 #include <QJsonObject>
-
 #include "newhabit.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class hTracker; }
@@ -22,6 +22,9 @@ public:
 
     int habitNumberTotal;
     QVector<newHabit *> allHabits;
+
+public slots:
+    void deleteHabit(int index);
 
 private slots:
     void on_addHabitBtn_clicked();

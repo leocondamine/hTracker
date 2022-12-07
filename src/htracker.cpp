@@ -41,12 +41,19 @@ void hTracker::addNewHabit()
     if (newHabitptr->habitName != "")
     {
         ui->habitLayout->addWidget(newHabitptr);
+        connect(newHabitptr,SIGNAL(closeThisHabit(int)),this,SLOT(deleteHabit(int)));
         newHabitptr->setAttribute(Qt::WA_DeleteOnClose, true);
         ++habitNumberTotal;
+        newHabitptr->habitIndex = allHabits.size();
         allHabits.append(newHabitptr);
+        newHabitptr->dayOfStart = QDate::currentDate();
+        newHabitptr->dayOfStartstr = newHabitptr->dayOfStart.toString("dd/MM/yyyy");
+        newHabitptr->loadedHabit = false;
+        QJsonArray oneDataArrayJSON;
+        oneDataArrayJSON.append("0");
+        newHabitptr->setupCheckHabitBtn(oneDataArrayJSON);
     }
-    newHabitptr->dayOfStart = QDate::currentDate();
-    newHabitptr->dayOfStartstr = newHabitptr->dayOfStart.toString("dd.MM.yyyy");
+
 }
 
 
@@ -83,7 +90,6 @@ bool hTracker::loadHabitData(const QJsonObject &json)
     if(json.contains("Data") && json["Data"].isArray())
     {
         QJsonArray DataJSON = json["Data"].toArray();
-        std::cout << DataJSON.size();
         for(int index=0;index<DataJSON.size();index+=2)
         {
             QJsonObject habitDataJSON = DataJSON[index].toObject();
@@ -92,15 +98,29 @@ bool hTracker::loadHabitData(const QJsonObject &json)
             newHabitptr->habitName = habitDataJSON["Habit Name"].toString();
             newHabitptr->nameHabitLabel();
             ui->habitLayout->addWidget(newHabitptr);
+            connect(newHabitptr, SIGNAL(closeThisHabit(int)), this, SLOT(deleteHabit(int)));
             newHabitptr->setAttribute(Qt::WA_DeleteOnClose, true);
+            newHabitptr->habitIndex = allHabits.size();
             allHabits.append(newHabitptr);
-
             newHabitptr->dayOfStartstr = habitDataJSON["Day of start"].toString();
-            //newHabitptr->dayOfStart = QDate::currentDate(); // TO DO convert to QDate
+            newHabitptr->loadedHabit = true;
+            QJsonArray checkHabitBtnDataJSON = DataJSON[index+1].toArray();
+            newHabitptr->setupCheckHabitBtn(checkHabitBtnDataJSON);
 
         }
     }
     return true;
+}
+
+void hTracker::deleteHabit(int index)
+{
+    allHabits[index]->close();
+    for (int i = index + 1; i < habitNumberTotal; ++i)
+    {
+        allHabits[i]->habitIndex--;
+    }
+    allHabits.remove(index);
+    habitNumberTotal--;
 }
 
 
