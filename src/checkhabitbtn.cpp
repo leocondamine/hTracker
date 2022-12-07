@@ -47,10 +47,10 @@ void checkHabitBtn::setNotDone()
 
 void checkHabitBtn::setStyleSheetDone()
 {
-    ui->pushButton->setStyleSheet("QPushButton {color: red; border: 3px}");
+    ui->pushButton->setStyleSheet("QPushButton {background-color: #ff3333; color: #fff; font-size: 11px;font-weight: bold; border: none; border-radius: 3px; padding: 5px;}");
 }
 
 void checkHabitBtn::setStyleSheetNotDone()
 {
-    ui->pushButton->setStyleSheet("QPushButton {color: blue; border: 3px}");
+    ui->pushButton->setStyleSheet("QPushButton {background-color: #fff; color: #ff3333; font-size: 11px;font-weight: bold; border: none; border-radius: 3px; padding: 5px;}");
 }

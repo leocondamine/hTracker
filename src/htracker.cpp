@@ -24,6 +24,7 @@ hTracker::hTracker(QWidget *parent)
     , ui(new Ui::hTracker)
 {
     ui->setupUi(this);
+    ui->addHabitBtn->setStyleSheet("QPushButton{ font-size: 22px;}");
     openReadHabitData();
 }
 

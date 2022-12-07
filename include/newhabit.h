@@ -47,8 +47,6 @@ private slots:
 private:
     int numberHabitDone{0};
     int getDayNumberTotal();
-    void openReadDayData();
-    bool loadDayData(const QJsonObject &json);
     Ui::newHabit *ui;
 
 signals:

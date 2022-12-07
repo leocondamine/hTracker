@@ -19,7 +19,7 @@ newHabit::newHabit(QWidget *parent) :
     ui(new Ui::newHabit)
 {
     ui->setupUi(this);
-    ui->scrollArea->horizontalScrollBar()->setStyleSheet("QScrollBar {height:3px;}");
+    //ui->scrollArea->horizontalScrollBar()->setStyleSheet("QScrollBar {height:3px;}");
 
 }
 
@@ -124,61 +124,24 @@ void newHabit::on_habitLabel_clicked()
 
 }
 
-void newHabit::openReadDayData()
-{
-    QString fileName =  QDir::currentPath() + "/autosave.json";
-    QFile file(fileName);
-    file.open(QIODevice::ReadOnly);
-    QJsonParseError JsonParseError;
-    QByteArray saveData = file.readAll();
-    QJsonDocument loadDoc(QJsonDocument::fromJson(saveData, &JsonParseError));
-    if(JsonParseError.error != QJsonParseError::NoError)
-    {
-            qDebug()<< "Parse Error"<< JsonParseError.errorString();
-           // QMessageBox::warning(this,"Load JSON File","Please check the JSON file, there are some issues in it");
-            return;
-    }
-    loadDayData(loadDoc.object());
-}
 
 void newHabit::closeHabit(int index)
 {
     emit closeThisHabit(index);
 }
 
-bool newHabit::loadDayData(const QJsonObject &json)
-{
-    if(json.contains("Data") && json["Data"].isArray())
-    {
-        QJsonArray DataJSON = json["Data"].toArray();
-        // std::cout << DataJSON.size();
-        for(int index=1;index<DataJSON.size();index+=2)
-        {
-            QJsonObject habitDataJSON = DataJSON[index].toObject();
-/*
-            newHabit *newHabitptr = new newHabit(this);
-            newHabitptr->habitName = habitDataJSON["Habit Name"].toString();
-            newHabitptr->nameHabitLabel();
-            ui->habitLayout->addWidget(newHabitptr);
-            newHabitptr->setAttribute(Qt::WA_DeleteOnClose, true);
-            allHabits.append(newHabitptr);
-
-            newHabitptr->dayOfStartstr = habitDataJSON["Day of start"].toString();
-            //newHabitptr->dayOfStart = QDate::currentDate(); // TO DO convert to QDate
-*/
-        }
-    }
-    return true;
-}
-
-
 void newHabit::on_closeButton_clicked()
 {
-    QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(this, "Confirmation de suppression", "Etes vous sûr de vouloir abandonner cette habitude ?",QMessageBox::Yes|QMessageBox::No);
-        if (reply == QMessageBox::Yes)
-        {
-            closeHabit(habitIndex);
-        }
+    QMessageBox reply;
+    reply.setText("Etes vous sûr de vouloir abandonner cette habitude ?");
+    QAbstractButton *yes = reply.addButton(("Oui"), QMessageBox::YesRole);
+    QAbstractButton *no = reply.addButton(("Non"), QMessageBox::NoRole);
+    reply.setIcon(QMessageBox::Question);
+    reply.exec();
+
+    if(reply.clickedButton() == yes)
+    {
+        closeHabit(habitIndex);
+    }
 }
 
