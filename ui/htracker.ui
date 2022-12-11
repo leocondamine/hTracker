@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>850</width>
+    <width>950</width>
     <height>198</height>
    </rect>
   </property>
@@ -100,7 +100,7 @@
          <string extracomment="Ajoute une nouvelle habitude"/>
         </property>
         <property name="text">
-         <string>+</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -226,7 +226,7 @@
         </property>
         <property name="font">
          <font>
-          <pointsize>7</pointsize>
+          <pointsize>30</pointsize>
           <stylestrategy>PreferAntialias</stylestrategy>
          </font>
         </property>
@@ -234,7 +234,7 @@
          <string extracomment="Ajoute une nouvelle habitude"/>
         </property>
         <property name="text">
-         <string>+</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -276,7 +276,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>850</width>
+     <width>950</width>
      <height>26</height>
     </rect>
    </property>

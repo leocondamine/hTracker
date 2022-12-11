@@ -16,6 +16,7 @@
 #include <QFileDialog>
 #include <QIODevice>
 #include <QDataStream>
+#include <QStandardPaths>
 
 
 
@@ -24,7 +25,11 @@ hTracker::hTracker(QWidget *parent)
     , ui(new Ui::hTracker)
 {
     ui->setupUi(this);
-    ui->addHabitBtn->setStyleSheet("QPushButton{ font-size: 22px;}");
+    ui->addHabitBtn->setIcon(QIcon(QDir::currentPath() + "/plus.png"));
+    ui->addHabitBtn->setIconSize(QSize(35,35));
+    ui->upToDateBtn->setIcon(QIcon(QDir::currentPath() +"/refresh.png"));
+    ui->upToDateBtn->setIconSize(QSize(30,30));
+
     openReadHabitData();
 }
 
@@ -43,7 +48,6 @@ void hTracker::addNewHabit()
     {
         ui->habitLayout->addWidget(newHabitptr);
         connect(newHabitptr,SIGNAL(closeThisHabit(int)),this,SLOT(deleteHabit(int)));
-        newHabitptr->setAttribute(Qt::WA_DeleteOnClose, true);
         ++habitNumberTotal;
         newHabitptr->habitIndex = allHabits.size();
         allHabits.append(newHabitptr);
@@ -53,7 +57,9 @@ void hTracker::addNewHabit()
         QJsonArray oneDataArrayJSON;
         oneDataArrayJSON.append("0");
         newHabitptr->setupCheckHabitBtn(oneDataArrayJSON);
+
     }
+    connect(this, SIGNAL(sendGoToDayZero()), newHabitptr, SLOT(goToDayZero()));
 
 }
 
@@ -66,9 +72,10 @@ void hTracker::on_addHabitBtn_clicked()
 
 void hTracker::openReadHabitData()
 {
-    QString fileName =  QDir::currentPath() + "/autosave.json";
+    QString fileName =  QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/hTracker/autosave.json";
+    qDebug() << fileName;
     QFile file(fileName);
-    file.open(QIODevice::ReadOnly);
+    file.open(QIODevice::ReadWrite);
     QJsonParseError JsonParseError;
     QByteArray saveData = file.readAll();
     QJsonDocument loadDoc(QJsonDocument::fromJson(saveData, &JsonParseError));
@@ -100,13 +107,15 @@ bool hTracker::loadHabitData(const QJsonObject &json)
             newHabitptr->nameHabitLabel();
             ui->habitLayout->addWidget(newHabitptr);
             connect(newHabitptr, SIGNAL(closeThisHabit(int)), this, SLOT(deleteHabit(int)));
-            newHabitptr->setAttribute(Qt::WA_DeleteOnClose, true);
             newHabitptr->habitIndex = allHabits.size();
             allHabits.append(newHabitptr);
             newHabitptr->dayOfStartstr = habitDataJSON["Day of start"].toString();
             newHabitptr->loadedHabit = true;
             QJsonArray checkHabitBtnDataJSON = DataJSON[index+1].toArray();
             newHabitptr->setupCheckHabitBtn(checkHabitBtnDataJSON);
+            // newHabitptr->goToDayZero();
+            connect(this, SIGNAL(sendGoToDayZero()), newHabitptr, SLOT(goToDayZero()));
+
 
         }
     }
@@ -154,13 +163,21 @@ bool hTracker::writeAllData(QJsonObject &json)
 
 void hTracker::saveData()
 {
-    QString fileName =  QDir::currentPath() + "/autosave.json";
+    QDir().mkdir(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/hTracker");
+    QString fileName =  QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/hTracker/autosave.json";
+    qDebug() << fileName;
     QFile file(fileName);
     QJsonObject dataObject;
     writeAllData(dataObject);
-    file.open(QIODevice::WriteOnly);
+    file.open(QIODevice::ReadWrite);
     file.write(QJsonDocument(dataObject).toJson());
     QDataStream out(&file);
     // file.save();
     file.close();
 }
+
+void hTracker::on_upToDateBtn_clicked()
+{
+    emit sendGoToDayZero();
+}
+

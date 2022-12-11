@@ -13,6 +13,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
+#include <QVector>
 
 newHabit::newHabit(QWidget *parent) :
     QWidget(parent),
@@ -20,7 +21,9 @@ newHabit::newHabit(QWidget *parent) :
 {
     ui->setupUi(this);
     //ui->scrollArea->horizontalScrollBar()->setStyleSheet("QScrollBar {height:3px;}");
-
+    ui->closeButton->setIcon(QIcon(QDir::currentPath() +"/trash.png"));
+    ui->closeButton->setIconSize(QSize(20,20));
+    ui->closeButton->setStyleSheet("QPushButton { background-color: #282828;} QPushButton::hover{background-color: #3B3B3B;} QPushButton::pressed{background-color: #9A9A9A;}");
 }
 
 newHabit::~newHabit()
@@ -56,7 +59,19 @@ void newHabit::setupCheckHabitBtn(QJsonArray &habitStateArray)
             QString dayValue = QString::number(dayValueInt);
 
             checkHabitBtn *checkHabitBtnptr = new checkHabitBtn(this);
-            checkHabitBtnptr->assignDateToLabel(dayValue);
+
+            if (dayValueInt == 1)
+            {
+                int monthInt = dateValue.month();
+                QString month = lMonth[monthInt - 1];
+                checkHabitBtnptr->assignDateToLabel(month);
+
+            }
+            else
+            {
+                checkHabitBtnptr->assignDateToLabel(dayValue);
+            }
+
             if (i < habitStateArray.size())
             {
                 QJsonObject habitStateJSON = habitStateArray[i].toObject();
@@ -130,6 +145,12 @@ void newHabit::closeHabit(int index)
     emit closeThisHabit(index);
 }
 
+void newHabit::goToDayZero()
+{
+    int dayZero = ui->scrollArea->horizontalScrollBar()->maximum();
+    ui->scrollArea->horizontalScrollBar()->setValue(dayZero);
+}
+
 void newHabit::on_closeButton_clicked()
 {
     QMessageBox reply;
@@ -143,5 +164,17 @@ void newHabit::on_closeButton_clicked()
     {
         closeHabit(habitIndex);
     }
+}
+
+
+void newHabit::on_closeButton_pressed()
+{
+    ui->closeButton->setIconSize(QSize(24,24));
+}
+
+
+void newHabit::on_closeButton_released()
+{
+    ui->closeButton->setIconSize(QSize(20,20));
 }
 

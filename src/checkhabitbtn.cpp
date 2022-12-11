@@ -6,6 +6,7 @@ checkHabitBtn::checkHabitBtn(QWidget *parent) :
     ui(new Ui::checkHabitBtn)
 {
     ui->setupUi(this);
+    ui->pushButton->setStyleSheet("QPushButton::hover{background-color: #FF6969;}");
 }
 
 checkHabitBtn::~checkHabitBtn()
@@ -47,10 +48,10 @@ void checkHabitBtn::setNotDone()
 
 void checkHabitBtn::setStyleSheetDone()
 {
-    ui->pushButton->setStyleSheet("QPushButton {background-color: #ff3333; color: #fff; font-size: 11px;font-weight: bold; border: none; border-radius: 3px; padding: 5px;}");
+    ui->pushButton->setStyleSheet("QPushButton {background-color: #ff3333; color: #fff; font-size: 11px;font-weight: bold; border: none; border-radius: 3px; padding: 5px;} QPushButton::hover{background-color: #FF6969;}");
 }
 
 void checkHabitBtn::setStyleSheetNotDone()
 {
-    ui->pushButton->setStyleSheet("QPushButton {background-color: #fff; color: #ff3333; font-size: 11px;font-weight: bold; border: none; border-radius: 3px; padding: 5px;}");
+    ui->pushButton->setStyleSheet("QPushButton {background-color: #fff; color: #ff3333; font-size: 11px;font-weight: bold; border: none; border-radius: 3px; padding: 5px;} QPushButton::hover{background-color: #FFE3E3;}");
 }

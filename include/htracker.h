@@ -29,6 +29,8 @@ public slots:
 private slots:
     void on_addHabitBtn_clicked();
 
+    void on_upToDateBtn_clicked();
+
 private:
     Ui::hTracker *ui;
     void addNewHabit();
@@ -38,6 +40,9 @@ private:
 
     bool writeAllData(QJsonObject &json);
     void saveData();
+
+signals:
+    void sendGoToDayZero();
 
 };
 #endif // HTRACKER_H

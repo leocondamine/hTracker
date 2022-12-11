@@ -36,17 +36,25 @@ public:
 
     void closeHabit(int index);
 
+
 public slots:
     void displayNewNumberHabit(int N);
+    void goToDayZero();
 
 private slots:
     void on_habitLabel_clicked();
 
     void on_closeButton_clicked();
 
+    void on_closeButton_pressed();
+
+    void on_closeButton_released();
+
 private:
     int numberHabitDone{0};
     int getDayNumberTotal();
+    const char* lMonth[12] = {"Jan.","Feb.","Mar.","Apr.","May","Jun.","Jul.","Aug.","Sep.","Oct.","Nov.","Dec."};
+
     Ui::newHabit *ui;
 
 signals:
